@@ -5,25 +5,28 @@ store = {}
 
 def shortlinkproduce(lenght=6):
   characters = string.ascii_letters + string.digits
-  code = ''.join(random.choice(characters) for i in range(lenght))
+  
+  while True:
+    code = ''.join(random.choice(characters) for i in range(lenght))
 
-  if code not in store:
-    return code
+    if code not in store:
+      return code
 
 def shorten(long_url):
-  short_url = shortlinkproduce()
-  store[short_url] = long_url
+  code = shortlinkproduce()
+  store[code] = long_url
   return "shortly.py" + code
 
-def widen(orginal_url):
-  return store.get(shorten)
+def widen(short_url):
+  code = short_url.split("/")[-1]
+  return store.get(code)
 
 url = input("Enter your link: ")
 
-short = short_url
+short = shorten(url)
 
 print("Short Url Is:", short)
 
-orginal = widen(orginal_url)
+orginal = widen(short)
 
 print("Orginal Url Is:", orginal)
